@@ -18,17 +18,28 @@ public class CommandFactory {
             instance = new CommandFactory();
         return instance;
     }
-
+/*
     public static Command getCommand(String name){
-        Command c = null;
+
         if(name.equals("C1"))
             c = new C1();
         else
             c= new C2();
         return c;
     }
+*/
+    public Command getCommand(String name) {
+        Command cmd = cache.get(name);
+        if (cmd==null) {
+            cmd = this.getCommand2(name);
+            cache.put(name, cmd);
+        }
 
-    public static Command getCommand2(String name){
+        return cmd;
+    }
+
+
+    public Command getCommand2(String name){
         Command cmd = null;
         Class c = null;
         try{
