@@ -1,9 +1,9 @@
-import java.util.*;
-import java.lang.*;
-import org.apache.log4j.Logger;
+package eetac.dsa.patterns.factory;
 
-import static java.awt.PageAttributes.MediaType.C1;
-import static java.awt.PageAttributes.MediaType.C2;
+import java.lang.*;
+import java.util.HashMap;
+
+import org.apache.log4j.Logger;
 
 public class CommandFactory {
 
@@ -12,19 +12,21 @@ public class CommandFactory {
 
     private static CommandFactory instance; //atributs
 
+    private HashMap<String, Command> cache; // hashmap per guardar a la cache
+
     public static CommandFactory getInstance(){
-        //retorna la instancia de CommandFactory
+        //retorna la instancia de eetac.dsa.patterns.factory.CommandFactory
         if(instance == null)
             instance = new CommandFactory();
         return instance;
     }
 /*
-    public static Command getCommand(String name){
+    public static eetac.dsa.patterns.factory.Command getCommand(String name){
 
-        if(name.equals("C1"))
-            c = new C1();
+        if(name.equals("eetac.dsa.patterns.factory.C1"))
+            c = new eetac.dsa.patterns.factory.C1();
         else
-            c= new C2();
+            c= new eetac.dsa.patterns.factory.C2();
         return c;
     }
 */
@@ -40,10 +42,11 @@ public class CommandFactory {
 
 
     public Command getCommand2(String name){
+        log.info("name "+name);
         Command cmd = null;
         Class c = null;
         try{
-            c = Class.forName("eetac.ea.patterns.factory"+name);
+            c = Class.forName("eetac.dsa.patterns.factory"+name);
             cmd = (Command)c.newInstance();
         }catch (Exception e){
             e.printStackTrace();
@@ -52,11 +55,11 @@ public class CommandFactory {
     }
 
     public static void main(String[]args){
-        Command c = CommandFactory.getInstance().getCommand("C1");
+        Command c = CommandFactory.getInstance().getCommand("eetac.dsa.patterns.factory.C1");
         c.execute();
-        c = CommandFactory.getInstance().getCommand("C2");
+        c = CommandFactory.getInstance().getCommand("eetac.dsa.patterns.factory.C2");
         c.execute();
 
-        CommandFactory.getInstance().getCommand2("C2").execute();
+        CommandFactory.getInstance().getCommand2("eetac.dsa.patterns.factory.C2").execute();
     }
 }
